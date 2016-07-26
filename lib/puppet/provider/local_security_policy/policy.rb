@@ -1,9 +1,9 @@
 #encoding: UTF-8
 require 'fileutils'
-
+require 'puppet/util/windows'
 begin
-  require "puppet_x/twp/inifile"
-  require "puppet_x/lsp/security_policy"
+  require "../../../puppet_x/twp/inifile"
+  require "../../../puppet_x/lsp/security_policy"
 rescue LoadError => detail
   require 'pathname' # JJM WORK_AROUND #14073
   mod = Puppet::Module.find('local_security_policy', Puppet[:environment].to_s)
@@ -109,6 +109,24 @@ Puppet::Type.type(:local_security_policy).provide(:policy) do
     @property_flush = {}
   end
 
+  def sid_to_user(value)
+    value = value.gsub(/(^\*)/ , '')
+    user = Puppet::Util::Windows::SID.sid_to_name(value)
+    unless user.nil?
+      user
+    else
+      value
+    end
+  end
+
+  def members_to_s(users)
+      return '' if users.nil? or !users.kind_of?(Array)
+      users = users.map do |sid|
+        sid_to_user(sid)
+      end
+      return users.join(',')
+  end
+
   # create the resource and convert any user supplied values to computer terms
   def create
     # do everything in flush method
@@ -164,7 +182,9 @@ Puppet::Type.type(:local_security_policy).provide(:policy) do
       inf["Version"] = {"signature"=>"$CHICAGO$", "Revision"=>1}
       inf["Unicode"] = {"Unicode"=>"yes"}
       section = policy_hash[:policy_type]
-      section_value = {policy_hash[:policy_setting] => policy_hash[:policy_value]}
+      policy_value = policy_hash[:policy_value]
+      policy_value = policy_value.join(',') if policy_value.is_a?(Array)
+      section_value = {policy_hash[:policy_setting] => policy_value }
       # we can utilize the IniFile class to write out the data in ini format
       inf[section] = section_value
       inf.write(:filename => infout, :encoding => 'utf-8')

@@ -1,6 +1,6 @@
 #encoding: UTF-8
 begin
-  require "puppet_x/lsp/security_policy"
+  require "../../../puppet_x/lsp/security_policy"
 rescue LoadError => detail
   require 'pathname' # JJM WORK_AROUND #14073
   mod = Puppet::Module.find('local_security_policy', Puppet[:environment].to_s)
@@ -62,8 +62,22 @@ Puppet::Type.newtype(:local_security_policy) do
     end
   end
 
-  newproperty(:policy_value) do
+  newproperty(:policy_value, :array_matching => :all) do
     desc 'Local Security Policy Setting Value'
+
+    def change_to_s(currentvalue, newvalue)
+      currentvalue = currentvalue.split(',').sort
+      if provider.respond_to?(:members_to_s)
+        currentvalue = provider.members_to_s(currentvalue)
+        newvalue = provider.members_to_s(newvalue)
+      end
+      super(currentvalue, newvalue)
+    end
+
+    def insync?(current)
+      current.split(',').sort == should.sort
+    end
+
     validate do |value|
       if value.nil? or value.empty?
         raise ArgumentError("Value cannot be nil or empty")

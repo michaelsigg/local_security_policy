@@ -1,51 +1,18 @@
 #encoding: UTF-8
 require 'puppet/provider'
+require 'puppet/util/windows'
 
 class SecurityPolicy
     attr_reader :wmic_cmd
     EVENT_TYPES = ["Success,Failure", "Success", "Failure", "No Auditing", 0, 1, 2, 3]
 
     def initialize
-        # suppose to make an instance method for wmic
-        @wmic_cmd = Puppet::Provider::CommandDefiner.define('wmic', 'wmic', Puppet::Provider)
-    end
-
-    def wmic(args=[])
-        case args[0]
-            when 'useraccount'
-                @@useraccount ||= wmic_cmd.execute(args).force_encoding('utf-16le').encode('utf-8', :universal_newline => true).gsub("\xEF\xBB\xBF", '')
-            when 'group'
-                @@groupaccount ||= wmic_cmd.execute(args).force_encoding('utf-16le').encode('utf-8', :universal_newline => true).gsub("\xEF\xBB\xBF", '')
-            else
-                # will not cache
-                wmic_cmd.execute(args).force_encoding('utf-16le').encode('utf-8', :universal_newline => true).gsub("\xEF\xBB\xBF", '')
-        end
-    end
-
-    # collect all the local accounts using wmic
-    def local_accounts
-        ary = []
-        ["useraccount","group"].each do |lu|
-            wmic([lu,'get', 'name,sid', '/format:csv']).split("\n").each do |line|
-                next if line =~ /Node/
-                if line.include? ","
-                    ary << line.strip.split(",")
-                end
-            end
-        end
-        ary
-    end
-
-    def user_sid_array
-        @user_sid_array ||= local_accounts + builtin_accounts
     end
 
     def user_to_sid(value)
-        sid = user_sid_array.find do |home,user,sid|
-            user == value
-        end
+        sid = Puppet::Util::Windows::SID.name_to_sid(value)
         unless sid.nil?
-            '*' + sid[2]
+            '*' + sid
         else
             value
         end
@@ -54,13 +21,11 @@ class SecurityPolicy
     # convert the sid to a user
     def sid_to_user(value)
         value = value.gsub(/(^\*)/ , '')
-        user = user_sid_array.find do |home,user,sid|
-            value == sid
-        end
+        user = Puppet::Util::Windows::SID.sid_to_name(value)
         unless user.nil?
-            user[1]
+           user
         else
-            value
+           value
         end
     end
 
@@ -92,94 +57,6 @@ class SecurityPolicy
         end
         policy_hash[:policy_value] = value
         policy_hash
-    end
-
-    def builtin_accounts
-      # more accounts and SIDs can be found at https://support.microsoft.com/en-us/kb/243330
-      ary = [
-            ["","NULL","S-1-0"],
-            ["","NOBODY","S-1-0-0"],
-            ["","EVERYONE","S-1-1-0"],
-            ["","LOCAL","S-1-2-0"],
-            ["","CONSOLE_LOGON","S-1-2-1"],
-            ["","CREATOR_OWNER","S-1-3-0"],
-            ["","CREATER_GROUP","S-1-3-1"],
-            ["","OWNER_SERVER","S-1-3-2"],
-            ["","GROUP_SERVER","S-1-3-3"],
-            ["","OWNER_RIGHTS","S-1-3-4"],
-            ["","NT_AUTHORITY","S-1-5"],
-            ["","DIALUP","S-1-5-1"],
-            ["","NETWORK","S-1-5-2"],
-            ["","BATCH","S-1-5-3"],
-            ["","INTERACTIVE","S-1-5-4"],
-            ["","SERVICE","S-1-5-6"],
-            ["","ANONYMOUS","S-1-5-7"],
-            ["","PROXY","S-1-5-8"],
-            ["","ENTERPRISE_DOMAIN_CONTROLLERS","S-1-5-9"],
-            ["","PRINCIPAAL_SELF","S-1-5-10"],
-            ["","AUTHENTICATED_USERS","S-1-5-11"],
-            ["","RESTRICTED_CODE","S-1-5-12"],
-            ["","TERMINAL_SERVER_USER","S-1-5-13"],
-            ["","REMOTE_INTERACTIVE_LOGON","S-1-5-14"],
-            ["","THIS_ORGANIZATION","S-1-5-15"],
-            ["","IUSER","S-1-5-17"],
-            ["","LOCAL_SYSTEM","S-1-5-18"],
-            ["","LOCAL_SERVICE","S-1-5-19"],
-            ["","NETWORK_SERVICE","S-1-5-20"],
-            ["","COMPOUNDED_AUTHENTICATION","S-1-5-21-0-0-0-496"],
-            ["","CLAIMS_VALID","S-1-5-21-0-0-0-497"],
-            ["","BUILTIN_ADMINISTRATORS","S-1-5-32-544"],
-            ["","BUILTIN_USERS","S-1-5-32-545"],
-            ["","BUILTIN_GUESTS","S-1-5-32-546"],
-            ["","POWER_USERS","S-1-5-32-547"],
-            ["","ACCOUNT_OPERATORS","S-1-5-32-548"],
-            ["","SERVER_OPERATORS","S-1-5-32-549"],
-            ["","PRINTER_OPERATORS","S-1-5-32-550"],
-            ["","BACKUP_OPERATORS","S-1-5-32-551"],
-            ["","REPLICATOR","S-1-5-32-552"],
-            ["","ALIAS_PREW2KCOMPACC","S-1-5-32-554"],
-            ["","REMOTE_DESKTOP","S-1-5-32-555"],
-            ["","NETWORK_CONFIGURATION_OPS","S-1-5-32-556"],
-            ["","INCOMING_FOREST_TRUST_BUILDERS","S-1-5-32-557"],
-            ["","PERMON_USERS","S-1-5-32-558"],
-            ["","PERFLOG_USERS","S-1-5-32-559"],
-            ["","WINDOWS_AUTHORIZATION_ACCESS_GROUP","S-1-5-32-560"],
-            ["","TERMINAL_SERVER_LICENSE_SERVERS","S-1-5-32-561"],
-            ["","DISTRIBUTED_COM_USERS","S-1-5-32-562"],
-            ["","IIS_USERS","S-1-5-32-568"],
-            ["","CRYPTOGRAPHIC_OPERATORS","S-1-5-32-569"],
-            ["","EVENT_LOG_READERS","S-1-5-32-573"],
-            ["","CERTIFICATE_SERVICE_DCOM_ACCESS","S-1-5-32-574"],
-            ["","RDS_REMOTE_ACCESS_SERVERS","S-1-5-32-575"],
-            ["","RDS_ENDPOINT_SERVERS","S-1-5-32-576"],
-            ["","RDS_MANAGEMENT_SERVERS","S-1-5-32-577"],
-            ["","HYPER_V_ADMINS","S-1-5-32-578"],
-            ["","ACCESS_CONTROL_ASSISTANCE_OPS","S-1-5-32-579"],
-            ["","REMOTE_MANAGEMENT_USERS","S-1-5-32-580"],
-            ["","WRITE_RESTRICTED_CODE","S-1-5-32-558"],
-            ["","NTLM_AUTHENTICATION","S-1-5-64-10"],
-            ["","SCHANNEL_AUTHENTICATION","S-1-5-64-14"],
-            ["","DIGEST_AUTHENTICATION","S-1-5-64-21"],
-            ["","THIS_ORGANIZATION_CERTIFICATE","S-1-5-65-1"],
-            ["","NT_SERVICE","S-1-5-80"],
-            ["","NT_SERVICE\\ALL_SERVICES","S-1-5-80-0"],
-            ["","NT_SERVICE\\WdiServiceHost","S-1-5-80-3139157870-2983391045-3678747466-658725712-1809340420"],
-            ["","USER_MODE_DRIVERS","S-1-5-84-0-0-0-0-0"],
-            ["","LOCAL_ACCOUNT","S-1-5-113"],
-            ["","LOCAL_ACCOUNT_AND_MEMBER_OF_ADMINISTRATORS_GROUP","S-1-5-114"],
-            ["","OTHER_ORGANIZATION","S-1-5-1000"],
-            ["","ALL_APP_PACKAGES","S-1-15-2-1"],
-            ["","ML_UNTRUSTED","S-1-16-0"],
-            ["","ML_LOW","S-1-16-4096"],
-            ["","ML_MEDIUM","S-1-16-8192"],
-            ["","ML_MEDIUM_PLUS","S-1-16-8448"],
-            ["","ML_HIGH","S-1-15-12288"],
-            ["","ML_SYSTEM","S-1-16-16384"],
-            ["","ML_PROTECTED_PROCESS","S-1-16-20480"],
-            ["","AUTHENTICATION_AUTHORITY_ASSERTED_IDENTITY","S-1-18-1"],
-            ["","SERVICE_ASSERTED_IDENTITY","S-1-18-2"]
-        ]
-        ary
     end
 
     # Converts a event number to a word
