@@ -74,6 +74,8 @@ Puppet::Type.type(:local_security_policy).provide(:policy) do
       begin
         ensure_value = parameter_value.nil? ? :absent : :present
         policy_desc, policy_values = SecurityPolicy.find_mapping_from_policy_name(parameter_name)
+	policyvalue = fixup_value(parameter_value, policy_values[:data_type])
+	policyvalue = user_to_sid(policyvalue)  unless policyvalue.start_with?("*")
         policy_hash = {
             :name => policy_desc,
             :ensure => ensure_value,
@@ -107,6 +109,15 @@ Puppet::Type.type(:local_security_policy).provide(:policy) do
   def initialize(value={})
     super(value)
     @property_flush = {}
+  end
+
+  def user_to_sid(value)
+    sid = Puppet::Util::Windows::SID.name_to_sid(value)
+    unless sid.nil?
+      '*' + sid
+    else
+      value
+    end
   end
 
   def sid_to_user(value)
