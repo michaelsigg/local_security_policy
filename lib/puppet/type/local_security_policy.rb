@@ -1,6 +1,6 @@
 #encoding: UTF-8
 begin
-  require "../../puppet_x/lsp/security_policy"
+  require_relative '../../puppet_x/lsp/security_policy.rb'
 rescue LoadError => detail
   require 'pathname' # JJM WORK_AROUND #14073
   mod = Puppet::Module.find('local_security_policy', Puppet[:environment].to_s)
