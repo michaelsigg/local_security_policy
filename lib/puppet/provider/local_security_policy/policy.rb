@@ -47,6 +47,15 @@ Puppet::Type.type(:local_security_policy).provide(:policy) do
     @file_object
   end
 
+  def self.user_to_sid(value)
+    sid = Puppet::Util::Windows::SID.name_to_sid(value)
+    unless sid.nil?
+      '*' + sid
+    else
+      value
+    end
+  end
+
   # converts any values that might be of a certain type specified in the mapping
   # converts everything to a string
   # returns the value
@@ -111,16 +120,7 @@ Puppet::Type.type(:local_security_policy).provide(:policy) do
     @property_flush = {}
   end
 
-  def user_to_sid(value)
-    sid = Puppet::Util::Windows::SID.name_to_sid(value)
-    unless sid.nil?
-      '*' + sid
-    else
-      value
-    end
-  end
-
-  def self.sid_to_user(value)
+  def sid_to_user(value)
     value = value.gsub(/(^\*)/ , '')
     user = Puppet::Util::Windows::SID.sid_to_name(value)
     unless user.nil?
