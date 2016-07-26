@@ -120,7 +120,7 @@ Puppet::Type.type(:local_security_policy).provide(:policy) do
     end
   end
 
-  def sid_to_user(value)
+  def self.sid_to_user(value)
     value = value.gsub(/(^\*)/ , '')
     user = Puppet::Util::Windows::SID.sid_to_name(value)
     unless user.nil?
