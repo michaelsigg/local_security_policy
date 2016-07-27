@@ -68,7 +68,7 @@ Puppet::Type.newtype(:local_security_policy) do
     def change_to_s(currentvalue, newvalue)
       case resource[:policy_type].to_s
         when 'Privilege Rights'
-          currentvalue = currentvalue.sort.split(',')
+          currentvalue = currentvalue.split(',').sort
           if provider.respond_to?(:members_to_s)
             currentvalue = provider.members_to_s(currentvalue)
             newvalue = provider.members_to_s(newvalue)
