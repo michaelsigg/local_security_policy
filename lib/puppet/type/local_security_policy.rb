@@ -75,6 +75,9 @@ Puppet::Type.newtype(:local_security_policy) do
     end
 
     def insync?(current)
+      cur = current.split(',').sort
+      to  = should.sort
+      Puppet.debug("insync? current: '#{cur}' should: '#{to}'")
       current.split(',').sort == should.sort
     end
 

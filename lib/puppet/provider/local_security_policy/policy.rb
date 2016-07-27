@@ -48,19 +48,9 @@ Puppet::Type.type(:local_security_policy).provide(:policy) do
   end
 
 
-  # TODO but both in a helper class
+  # TODO maybe move to helper class
   def self.user_to_sid(value)
-    sid = Puppet::Util::Windows::SID.name_to_sid(value)
-    unless sid.nil?
-      '*' + sid
-    else
-      value
-    end
-  end
-
-
-  # TODO but both in a helper class
-  def user_to_sid(value)
+    Puppet.debug("convert user to sid: #{value}")
     sid = Puppet::Util::Windows::SID.name_to_sid(value)
     unless sid.nil?
       '*' + sid
@@ -98,6 +88,16 @@ Puppet::Type.type(:local_security_policy).provide(:policy) do
         ensure_value = parameter_value.nil? ? :absent : :present
         policy_desc, policy_values = SecurityPolicy.find_mapping_from_policy_name(parameter_name)
 	policyvalue = fixup_value(parameter_value, policy_values[:data_type])
+        if section.downcase ==  'privilege rights'
+           policyvalue = policyvalue.split(',')
+           policyvalue_array = Array.new
+           policyvalue.each do |v|
+             unless v.start_with?('*')
+               v = user_to_sid(v) 
+             end
+             policyvalue_array << v
+           end
+        end
 	policyvalue = user_to_sid(policyvalue)  unless policyvalue.start_with?("*")
         policy_hash = {
             :name => policy_desc,
