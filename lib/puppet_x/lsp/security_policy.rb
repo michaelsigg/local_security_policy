@@ -697,22 +697,22 @@ class SecurityPolicy
                 :policy_type => 'Registry Values',
             },
             'Microsoft network server: Amount of idle time required before suspending session' => {
-                :name => 'MACHINE\System\CurrentControlSet\Services\LanManServer\Parameters\autodisconnect',
+                :name => 'MACHINE\System\CurrentControlSet\Services\LanManServer\Parameters\AutoDisconnect',
                 :reg_type => '4',
                 :policy_type => 'Registry Values',
             },
             'Microsoft network server: Digitally sign communications (always)' => {
-                :name => 'MACHINE\System\CurrentControlSet\Services\LanManServer\Parameters\requiresecuritysignature',
+                :name => 'MACHINE\System\CurrentControlSet\Services\LanManServer\Parameters\RequireSecuritySignature',
                 :reg_type => '4',
                 :policy_type => 'Registry Values',
             },
             'Microsoft network server: Digitally sign communications (if client agrees)' => {
-                :name => 'MACHINE\System\CurrentControlSet\Services\LanManServer\Parameters\enablesecuritysignature',
+                :name => 'MACHINE\System\CurrentControlSet\Services\LanManServer\Parameters\EnableSecuritySignature',
                 :reg_type => '4',
                 :policy_type => 'Registry Values',
             },
             'Microsoft network server: Disconnect clients when logon hours expire' => {
-                :name => 'MACHINE\System\CurrentControlSet\Services\LanManServer\Parameters\enableforcedlogoff',
+                :name => 'MACHINE\System\CurrentControlSet\Services\LanManServer\Parameters\EnableForcedLogOff',
                 :reg_type => '4',
                 :policy_type => 'Registry Values',
             },
