@@ -93,19 +93,20 @@ Puppet::Type.type(:local_security_policy).provide(:policy) do
            policyvalue_array = Array.new
            policyvalue.each do |v|
              unless v.start_with?('*')
-               v = user_to_sid(v) 
+               v = user_to_sid(v)
              end
              policyvalue_array << v
            end
+           policyvalue = policyvalue_array.join(',')
         end
-	policyvalue = user_to_sid(policyvalue)  unless policyvalue.start_with?("*")
         policy_hash = {
             :name => policy_desc,
             :ensure => ensure_value,
             :policy_type => section ,
             :policy_setting => parameter_name,
-            :policy_value => fixup_value(parameter_value, policy_values[:data_type])
+            :policy_value => policyvalue,
         }
+
         inst = new(policy_hash)
         settings << inst
       rescue KeyError => e
