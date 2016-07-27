@@ -47,6 +47,8 @@ Puppet::Type.type(:local_security_policy).provide(:policy) do
     @file_object
   end
 
+
+  # TODO but both in a helper class
   def self.user_to_sid(value)
     sid = Puppet::Util::Windows::SID.name_to_sid(value)
     unless sid.nil?
@@ -55,6 +57,18 @@ Puppet::Type.type(:local_security_policy).provide(:policy) do
       value
     end
   end
+
+
+  # TODO but both in a helper class
+  def user_to_sid(value)
+    sid = Puppet::Util::Windows::SID.name_to_sid(value)
+    unless sid.nil?
+      '*' + sid
+    else
+      value
+    end
+  end
+
 
   # converts any values that might be of a certain type specified in the mapping
   # converts everything to a string
