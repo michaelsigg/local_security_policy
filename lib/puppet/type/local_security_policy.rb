@@ -66,19 +66,25 @@ Puppet::Type.newtype(:local_security_policy) do
     desc 'Local Security Policy Setting Value'
 
     def change_to_s(currentvalue, newvalue)
-      currentvalue = currentvalue.split(',').sort
-      if provider.respond_to?(:members_to_s)
-        currentvalue = provider.members_to_s(currentvalue)
-        newvalue = provider.members_to_s(newvalue)
+      case resource[:policy_type].to_s
+        when 'Privilege Rights'
+          currentvalue = currentvalue.sort.split(',')
+          if provider.respond_to?(:members_to_s)
+            currentvalue = provider.members_to_s(currentvalue)
+            newvalue = provider.members_to_s(newvalue)
+          end
       end
       super(currentvalue, newvalue)
     end
 
     def insync?(current)
-      cur = current.split(',').sort
-      to  = should.sort
-      Puppet.debug("insync? current: '#{cur}' should: '#{to}'")
-      current.split(',').sort == should.sort
+      Puppet.debug("insync? current: '#{current}' should: '#{should}'")
+      case resource[:policy_type].to_s
+        when 'Privilege Rights'
+          current.split(',').sort == should.sort
+        else
+        super([current]) #pass as array
+      end
     end
 
     validate do |value|
