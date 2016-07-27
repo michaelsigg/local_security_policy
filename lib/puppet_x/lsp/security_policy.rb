@@ -518,7 +518,7 @@ class SecurityPolicy
             },
             'Interactive logon: Message text for users attempting to log on' => {
                 :name => 'MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System\LegalNoticeText',
-                :reg_type => '7',
+                :reg_type => '1',
                 :policy_type => 'Registry Values',
             },
             'User Account Control: Switch to the secure desktop when prompting for elevation' => {

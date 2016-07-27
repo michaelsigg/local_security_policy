@@ -209,7 +209,7 @@ Puppet::Type.type(:local_security_policy).provide(:policy) do
       inf["Unicode"] = {"Unicode"=>"yes"}
       section = policy_hash[:policy_type]
       policy_value = policy_hash[:policy_value]
-      policy_value = policy_value.join(',') if policy_value.is_a?(Array)
+      policy_value = policy_value.join(',') if section == 'privilege rights' and policy_value.is_a?(Array)
       section_value = {policy_hash[:policy_setting] => policy_value }
       # we can utilize the IniFile class to write out the data in ini format
       inf[section] = section_value
