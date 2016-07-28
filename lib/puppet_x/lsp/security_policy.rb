@@ -756,15 +756,80 @@ class SecurityPolicy
                 :reg_type => '4',
                 :policy_type => 'Registry Values',
             },
-            "MACHINE\\System\\CurrentControlSet\\Control\\Lsa\\MSV1_0\\NTLMMinServerSec" => {
-                :name => "MACHINE\\System\\CurrentControlSet\\Control\\Lsa\\MSV1_0\\NTLMMinServerSec",
-                :policy_type => "Registry Values",
-                :reg_type => "4"
+            'Network Security: Minimum session security for NTLM SSP based (including secure RPC) servers' => {
+                :name => 'MACHINE\System\CurrentControlSet\Control\Lsa\MSV1_0\NTLMMinServerSec',
+                :policy_type => 'Registry Values',
+                :reg_type => '4'
             },
-            "MACHINE\\System\\CurrentControlSet\\Control\\Lsa\\NoLMHash" => {
-                :name => "MACHINE\\System\\CurrentControlSet\\Control\\Lsa\\NoLMHash",
-                :policy_type => "Registry Values",
-                :reg_type => "4"
+            'MSS: (SafeDllSearchMode) Enable Safe DLL search mode' => {
+                :name => 'MACHINE\System\CurrentControlSet\Control\Session Manager\SafeDllSearchMode',
+                :policy_type => 'Registry Values',
+                :reg_type => '4'
+            },
+            'System settings: Optional subsystems' => {
+                :name => 'MACHINE\System\CurrentControlSet\Control\Session Manager\SubSystems\optional',
+                :policy_type => 'Registry Values',
+                :reg_type => '7'
+            },
+            'AutoAdminLogon' => {
+                :name => 'MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\AutoAdminLogon',
+                :policy_type => 'Registry Values',
+                :reg_type => '1'
+            },
+            'AutoShareServer' => {
+                :name => 'MACHINE\System\CurrentControlSet\Services\LanmanServer\Parameters\AutoShareServer',
+                :policy_type => 'Registry Values',
+                :reg_type => '1'
+            },
+            'Shutdown: Clear virtual memory pagefile' => {
+                :name => 'MACHINE\System\CurrentControlSet\Control\Session Manager\Memory Management\ClearPageFileAtShutdown',
+                :policy_type => 'Registry Values',
+                :reg_type => '4'
+            },
+            'System Object: Require Case Insensitivity for Non-Windows Subsystems' => {
+                :name => 'MACHINE\System\CurrentControlSet\Control\Session Manager\Kernel\ObCaseInsensitive',
+                :policy_type => 'Registry Values',
+                :reg_type => '1'
+            },
+            'Network Access: Restrict anonymous access to Named Pipes and Shares' => {
+                :name => 'MACHINE\System\CurrentControlSet\Services\LanManServer\Parameters\RestrictNullSessAccess',
+                :policy_type => 'Registry Values',
+                :reg_type => '4'
+            },
+            'Network security: LAN Manager authentication level': => {
+                :name => 'MACHINE\System\CurrentControlSet\Control\Lsa\LmCompatibilityLevel',
+                :policy_type => 'Registry Values',
+                :reg_type => '4'
+            },
+            'Network security: LDAP client signing requirements' => {
+                :name => 'MACHINE\System\CurrentControlSet\Services\LDAP\LDAPClientIntegrity',
+                :policy_type => 'Registry Values',
+                :reg_type => '4'
+            }
+            'Network security: Do not store LAN Manager hash value on next password change' => {
+                :name => 'MACHINE\System\CurrentControlSet\Control\Lsa\NoLMHash',
+                :policy_type => 'Registry Values',
+                :reg_type => '4'
+            },
+            'Network security: Allow PKU2U authentication requests to this computer to use online identities' => {
+                :name => 'MACHINE\System\CurrentControlSet\Control\Lsa\pku2u\AllowOnlineID',
+                :policy_type => 'Registry Values',
+                :reg_type => '4'
+            },
+            'Network security: Allow LocalSystem NULL session fallback' => {
+                :name => 'MACHINE\System\CurrentControlSet\Control\Lsa\MSV1_0\allownullsessionfallback',
+                :policy_type => 'Registry Values',
+                :reg_type => '4'
+            },
+            'Restrict Access to Base System Objects' => {
+                :name => 'MACHINE\System\CurrentControlSet\Control\Session Manager\ProtectionMode',
+                :policy_type => 'Registry Values',
+                :reg_type => '4'
+            },
+            'Domain member: Require strong (Windows 2000 or later) session key' => {
+                :name => 'MACHINE\System\CurrentControlSet\Services\Netlogon\Parameters\RequireStrongKey',
+                :policy_type => 'Registry Values',
+                :reg_type => '4'
             },
             "MACHINE\\System\\CurrentControlSet\\Control\\Print\\Providers\\LanMan Print Services\\Servers\\AddPrinterDrivers" => {
                 :name => "MACHINE\\System\\CurrentControlSet\\Control\\Print\\Providers\\LanMan Print Services\\Servers\\AddPrinterDrivers",
