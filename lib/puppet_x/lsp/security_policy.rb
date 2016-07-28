@@ -796,7 +796,7 @@ class SecurityPolicy
                 :policy_type => 'Registry Values',
                 :reg_type => '4'
             },
-            'Network security: LAN Manager authentication level': => {
+            'Network security: LAN Manager authentication level' => {
                 :name => 'MACHINE\System\CurrentControlSet\Control\Lsa\LmCompatibilityLevel',
                 :policy_type => 'Registry Values',
                 :reg_type => '4'
@@ -805,7 +805,7 @@ class SecurityPolicy
                 :name => 'MACHINE\System\CurrentControlSet\Services\LDAP\LDAPClientIntegrity',
                 :policy_type => 'Registry Values',
                 :reg_type => '4'
-            }
+            },
             'Network security: Do not store LAN Manager hash value on next password change' => {
                 :name => 'MACHINE\System\CurrentControlSet\Control\Lsa\NoLMHash',
                 :policy_type => 'Registry Values',
