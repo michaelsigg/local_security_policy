@@ -88,8 +88,8 @@ Puppet::Type.newtype(:local_security_policy) do
     end
 
     validate do |value|
-      if value.nil? or value.empty?
-        raise ArgumentError("Value cannot be nil or empty")
+      if value.nil?
+        raise ArgumentError("Value cannot be nil")
       end
       case resource[:policy_type].to_s
         when 'Privilege Rights'
