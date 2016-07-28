@@ -254,6 +254,18 @@ class SecurityPolicy
                 :policy_type => 'Event Audit',
             },
             #User rights mapping
+            'Change the system time' => {
+                :name => 'SeSystemTimePrivilege',
+                :policy_type => 'Privilege Rights',
+            },
+            'Lock pages in memory' => {
+                :name => 'SeLockMemoryPrivilege',
+                :policy_type => 'Privilege Rights',
+            },
+            'Act as part of the operating system' => {
+                :name => 'SeTcbPrivilege',
+                :policy_type => 'Privilege Rights',
+            },
             'Access Credential Manager as a trusted caller' => {
                 :name => 'SeTrustedCredManAccessPrivilege',
                 :policy_type => 'Privilege Rights',
