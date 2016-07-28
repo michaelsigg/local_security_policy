@@ -67,7 +67,7 @@ Puppet::Type.type(:local_security_policy).provide(:policy) do
     value = value.to_s.strip
     case type
       when :quoted_string
-        value = "\"#{value}\""
+        value = value # not required anymore maybe later ? "\"#{value}\""
     end
     value
   end
