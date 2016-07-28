@@ -751,8 +751,8 @@ class SecurityPolicy
                 :reg_type => '7',
                 :policy_type => 'Registry Values',
             },
-            'Network access: Restrict anonymous access to Named Pipes and Shares' => {
-                :name => 'MACHINE\System\CurrentControlSet\Services\LanManServer\Parameters\RestrictNullSessaccess',
+            'Network Access: Restrict anonymous access to Named Pipes and Shares' => {
+                :name => 'MACHINE\System\CurrentControlSet\Services\LanManServer\Parameters\RestrictNullSessAccess',
                 :reg_type => '4',
                 :policy_type => 'Registry Values',
             },
@@ -790,11 +790,6 @@ class SecurityPolicy
                 :name => 'MACHINE\System\CurrentControlSet\Control\Session Manager\Kernel\ObCaseInsensitive',
                 :policy_type => 'Registry Values',
                 :reg_type => '1'
-            },
-            'Network Access: Restrict anonymous access to Named Pipes and Shares' => {
-                :name => 'MACHINE\System\CurrentControlSet\Services\LanManServer\Parameters\RestrictNullSessAccess',
-                :policy_type => 'Registry Values',
-                :reg_type => '4'
             },
             'Network security: LAN Manager authentication level' => {
                 :name => 'MACHINE\System\CurrentControlSet\Control\Lsa\LmCompatibilityLevel',
@@ -873,11 +868,6 @@ class SecurityPolicy
             },
             "MACHINE\\System\\CurrentControlSet\\Services\\LanManServer\\Parameters\\RequireSecuritySignature" => {
                 :name => "MACHINE\\System\\CurrentControlSet\\Services\\LanManServer\\Parameters\\RequireSecuritySignature",
-                :policy_type => "Registry Values",
-                :reg_type => "4"
-            },
-            "MACHINE\\System\\CurrentControlSet\\Services\\LanManServer\\Parameters\\RestrictNullSessAccess" => {
-                :name => "MACHINE\\System\\CurrentControlSet\\Services\\LanManServer\\Parameters\\RestrictNullSessAccess",
                 :policy_type => "Registry Values",
                 :reg_type => "4"
             },
