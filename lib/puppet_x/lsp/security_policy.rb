@@ -838,6 +838,31 @@ class SecurityPolicy
                 :policy_type => 'Registry Values',
                 :reg_type => '4'
             },
+            'Network security: Configure encryption types allowed for Kerberos' => {
+                :name => 'MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System\Kerberos\Parameters\SupportedEncryptionTypes',
+                :policy_type => 'Registry Values',
+                 :reg_type => '4'
+            },
+            'Domain controller: Allow server operators to schedule tasks' => {
+                 :name => 'MACHINE\System\CurrentControlSet\Control\Lsa\SubmitControl',
+                 :policy_type => 'Registry Values',
+                 :reg_type => '4'
+            },
+            'Network access: Shares that can be accessed anonymously' => {
+                 :name => 'MACHINE\System\CurrentControlSet\Services\LanManServer\Parameters\NullSessionShares',
+                 :policy_type => 'Registry Values',
+                 :reg_type => '7'
+            },
+            'Domain controller: Refuse machine account password changes' => {
+                 :name => 'MACHINE\System\CurrentControlSet\Services\Netlogon\Parameters\RefusePasswordChange',
+                 :policy_type => 'Registry Values',
+                 :reg_type => '4'
+            },
+            'Domain controller: LDAP server signing requirements' => {
+                 :name => 'MACHINE\System\CurrentControlSet\Services\NTDS\Parameters\LDAPServerIntegrity',
+                 :policy_type => 'Registry Values',
+                 :reg_type => '4'
+            },
             "MACHINE\\System\\CurrentControlSet\\Control\\Print\\Providers\\LanMan Print Services\\Servers\\AddPrinterDrivers" => {
                 :name => "MACHINE\\System\\CurrentControlSet\\Control\\Print\\Providers\\LanMan Print Services\\Servers\\AddPrinterDrivers",
                 :policy_type => "Registry Values",
