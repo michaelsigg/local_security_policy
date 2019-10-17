@@ -253,6 +253,11 @@ class SecurityPolicy
                 :name => 'AuditSystemEvents',
                 :policy_type => 'Event Audit',
             },
+            'Audit: Force audit policy subcategory settings (Windows Vista or later) to override audit policy category settings' => {
+                :name => 'MACHINE\System\CurrentControlSet\Control\Lsa\SCENoApplyLegacyAuditPolicy',
+                :reg_type => '4',
+                :policy_type => 'Registry Values',
+            },
             #User rights mapping
             'Change the system time' => {
                 :name => 'SeSystemTimePrivilege',
@@ -493,6 +498,11 @@ class SecurityPolicy
                 :reg_type => '4',
                 :policy_type => 'Registry Values',
             },
+            'Interactive logon: Do not display username at sign-in' => {
+                :name => 'MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System\DontDisplayUserName',
+                :reg_type => '4',
+                :policy_type => 'Registry Values',
+            },
             'User Account Control: Detect application installations and prompt for elevation' => {
                 :name => 'MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System\EnableInstallerDetection',
                 :reg_type => '4',
@@ -596,6 +606,11 @@ class SecurityPolicy
             'Audit: Audit the use of Backup and Restore privilege' => {
                 :name => 'MACHINE\System\CurrentControlSet\Control\Lsa\FullPrivilegeAuditing',
                 :reg_type => '3',
+                :policy_type => 'Registry Values',
+            },
+            'Accounts: Block Microsoft accounts' => {
+                :name => 'MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System\NoConnectedUser',
+                :reg_type => '4',
                 :policy_type => 'Registry Values',
             },
             'Accounts: Limit local account use of blank passwords to console logon only' => {
@@ -728,6 +743,11 @@ class SecurityPolicy
                 :reg_type => '4',
                 :policy_type => 'Registry Values',
             },
+            'Microsoft network server: Attempt S4U2Self to obtain claim information' => {
+                :name => 'MACHINE\System\CurrentControlSet\Services\LanManServer\Parameters\EnableS4U2SelfForClaims',
+                :reg_type => '4',
+                :policy_type => 'Registry Values',
+            },
             'Network access: Named Pipes that can be accessed anonymously' => {
                 :name => 'MACHINE\System\CurrentControlSet\Services\LanManServer\Parameters\NullSessionPipes',
                 :reg_type => '7',
@@ -766,6 +786,11 @@ class SecurityPolicy
             'Network Access: Restrict anonymous access to Named Pipes and Shares' => {
                 :name => 'MACHINE\System\CurrentControlSet\Services\LanManServer\Parameters\RestrictNullSessAccess',
                 :reg_type => '4',
+                :policy_type => 'Registry Values',
+            },
+            'Network access: Restrict clients allowed to make remote calls to SAM' => {
+                :name => 'MACHINE\System\CurrentControlSet\Control\Lsa\RestrictRemoteSAM',
+                :reg_type => '1',
                 :policy_type => 'Registry Values',
             },
             'Network Security: Minimum session security for NTLM SSP based (including secure RPC) servers' => {
@@ -808,6 +833,11 @@ class SecurityPolicy
                 :policy_type => 'Registry Values',
                 :reg_type => '4'
             },
+            'Network security: Minimum session security for NTLM SSP based (including secure RPC) clients' => {
+                :name => 'MACHINE\System\CurrentControlSet\Control\Lsa\MSV1_0\NTLMMinClientSec',
+                :reg_type => '4',
+                :policy_type => 'Registry Values',
+            },
             'Network security: LDAP client signing requirements' => {
                 :name => 'MACHINE\System\CurrentControlSet\Services\LDAP\LDAPClientIntegrity',
                 :policy_type => 'Registry Values',
@@ -840,6 +870,11 @@ class SecurityPolicy
             },
             'Network security: Configure encryption types allowed for Kerberos' => {
                 :name => 'MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System\Kerberos\Parameters\SupportedEncryptionTypes',
+                :policy_type => 'Registry Values',
+                 :reg_type => '4'
+            },
+            'Network security: Allow LocalSystem NULL session fallback' => {
+                :name => 'MACHINE\System\CurrentControlSet\Control\Lsa\MSV1_0\allownullsessionfallback',
                 :policy_type => 'Registry Values',
                  :reg_type => '4'
             },
