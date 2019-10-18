@@ -259,18 +259,6 @@ class SecurityPolicy
                 :policy_type => 'Registry Values',
             },
             #User rights mapping
-            'Change the system time' => {
-                :name => 'SeSystemTimePrivilege',
-                :policy_type => 'Privilege Rights',
-            },
-            'Lock pages in memory' => {
-                :name => 'SeLockMemoryPrivilege',
-                :policy_type => 'Privilege Rights',
-            },
-            'Act as part of the operating system' => {
-                :name => 'SeTcbPrivilege',
-                :policy_type => 'Privilege Rights',
-            },
             'Access Credential Manager as a trusted caller' => {
                 :name => 'SeTrustedCredManAccessPrivilege',
                 :policy_type => 'Privilege Rights',
@@ -558,11 +546,6 @@ class SecurityPolicy
                 :reg_type => '4',
                 :policy_type => 'Registry Values',
             },
-            'Devices: Allow undock without having to log on' => {
-                :name => 'MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System\UndockWithoutLogon',
-                :reg_type => '4',
-                :policy_type => 'Registry Values',
-            },
             'User Account Control: Only elevate executables that are signed and validated' => {
                 :name => 'MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System\ValidateAdminCodeSignatures',
                 :reg_type => '4',
@@ -585,11 +568,6 @@ class SecurityPolicy
             },
             'Network access: Do not allow storage of passwords and credentials for network authentication' => {
                 :name => 'MACHINE\System\CurrentControlSet\Control\Lsa\DisableDomainCreds',
-                :reg_type => '4',
-                :policy_type => 'Registry Values',
-            },
-            'Network access: Let Everyone permissions apply to anonymous users' => {
-                :name => 'MACHINE\System\CurrentControlSet\Control\Lsa\EveryoneIncludesAnonymous',
                 :reg_type => '4',
                 :policy_type => 'Registry Values',
             },
@@ -620,11 +598,6 @@ class SecurityPolicy
             },
             'Network security: Allow Local System to use computer identity for NTLM' => {
                 :name => 'MACHINE\System\CurrentControlSet\Control\Lsa\MSV1_0\NTLMMinClientSec',
-                :reg_type => '4',
-                :policy_type => 'Registry Values',
-            },
-            'Network access: Remotely accessible registry paths' => {
-                :name => 'MACHINE\System\Current\CurrentControlSet\Control\SecurePipeServers\Winreg\AllowedExactPaths\Machine',
                 :reg_type => '4',
                 :policy_type => 'Registry Values',
             },
@@ -675,11 +648,6 @@ class SecurityPolicy
             },
             'Domain member: Maximum machine account password age' => {
                 :name => 'MACHINE\System\CurrentControlSet\Services\Netlogon\Parameters\MaximumPasswordAge',
-                :reg_type => '4',
-                :policy_type => 'Registry Values',
-            },
-            'Domain member: Require strong (Windows 2000 or later) session key' => {
-                :name => 'MACHINE\System\CurrentControlSet\Services\Netlogon\Parameters\RequireStrongKey',
                 :reg_type => '4',
                 :policy_type => 'Registry Values',
             },
@@ -749,11 +717,6 @@ class SecurityPolicy
                 :policy_type => 'Registry Values',
             },
             'Network access: Named Pipes that can be accessed anonymously' => {
-                :name => 'MACHINE\System\CurrentControlSet\Services\LanManServer\Parameters\NullSessionPipes',
-                :reg_type => '7',
-                :policy_type => 'Registry Values',
-            },
-            'Network access: Shares that can be accessed anonymously' => {
                 :name => 'MACHINE\System\CurrentControlSet\Services\LanManServer\Parameters\NullSessionPipes',
                 :reg_type => '7',
                 :policy_type => 'Registry Values',
@@ -850,11 +813,6 @@ class SecurityPolicy
             },
             'Network security: Allow PKU2U authentication requests to this computer to use online identities' => {
                 :name => 'MACHINE\System\CurrentControlSet\Control\Lsa\pku2u\AllowOnlineID',
-                :policy_type => 'Registry Values',
-                :reg_type => '4'
-            },
-            'Network security: Allow LocalSystem NULL session fallback' => {
-                :name => 'MACHINE\System\CurrentControlSet\Control\Lsa\MSV1_0\allownullsessionfallback',
                 :policy_type => 'Registry Values',
                 :reg_type => '4'
             },
